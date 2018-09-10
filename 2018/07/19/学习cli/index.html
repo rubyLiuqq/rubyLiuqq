@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="Chinese &amp; English" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RubyLiu&#39;s Blog</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    
+    <meta name="description" content="The site is used for technology accumulation and precipitation,目标：利用自制的命令行实现输出自己的简历；增加常用的命令：ls、 ls -a、打开当前目录
+怎么制作命令行1、配置基础框架2、新建bin/qqResume.js目录，并如下:123456789101,"> 
+    <meta name="author" content="Ruby Liu"> 
+    <link rel="alternative" href="atom.xml" title="RubyLiu&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-8691406134231910",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body class="loading">
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">学习cli</h3>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">学习cli</h1>
+        <div class="stuff">
+            <span>七月 19, 2018</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/cli/">cli</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/webpack/">webpack</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>&emsp;在这之前一直想做一个cli的脚手架，近期公司团队中有一位大牛开发完成，想自己学习，做了这篇学习记录，他的cli工具支持ValillaJS、VueJS、React、Angular等四大主流框架，我就学习Vue的即可，等之后有了自己的需求，自己再加。<br>&emsp;Cli有三个模块组成：初始化、开发和构建</p>
+<p>1、项目的初始化目录</p>
+<blockquote>
+<p>.gitignore<br>.editorconfig<br>index.js<br>LINCESE<br>package.json<br>README.md</p>
+</blockquote>
+<p>2、安装eslint以及配置<br><code>lint</code>、<code>eslintConfig</code><br>  在package.json中对 lint和eslint进行配置，对eslint中的rules进行约束<br>  comma-dangle、no-console等<br>3、利用husky设置git hooks<br><code>precommit</code><br>  结合2 中的lint 规范代码<br>4、利用commitlint lint commit 信息<br><code>commitmsg</code>、<code>commitlint</code><br>  提交信息的lint 规范，可参考 git commit 规范<br>5、增加基础的cli信息，commander的使用<br><code>init|server|build command</code> -&gt;  bin/cli.js<br>  commander 命令行自制 init | server | build<br>6、i18n（国际化）的支持<br>  增加i18n 英中文 对init|server|build 的说明，并修改bin/cli.js 的描述<br>7、在lib中增加 logger.js<br>  增加 logger util，用于 commander 命令的处理并作出不同的运行结果显示，比如：安装完毕，服务开启完毕，报错提示等。<br>8、</p>
+<p>补充：<br>1、chalk 是一个颜色的插件<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> chalk = <span class="built_in">require</span>(<span class="string">'chalk'</span>);</span><br><span class="line"><span class="comment">// Use RGB colors in terminal emulators that support it.</span></span><br><span class="line"><span class="built_in">console</span>.log(chalk.blue(<span class="string">'Hello'</span>) + <span class="string">'World'</span> + chalk.red(<span class="string">'!'</span>));</span><br><span class="line"><span class="built_in">console</span>.log(chalk.keyword(<span class="string">'orange'</span>)(<span class="string">'Yay for orange colored text!'</span>));</span><br><span class="line"><span class="built_in">console</span>.log(chalk.rgb(<span class="number">123</span>, <span class="number">45</span>, <span class="number">67</span>).underline(<span class="string">'Underlined reddish color'</span>));</span><br><span class="line"><span class="built_in">console</span>.log(chalk.hex(<span class="string">'#DEADED'</span>).bold(<span class="string">'Bold gray!'</span>));</span><br></pre></td></tr></table></figure></p>
+<p>2、readline 处理日志文本很方便，逐行读取<br>  可参考<a href="http://nodejs.cn/api/readline.html" target="_blank" rel="noopener">node中文网</a>查看API<br>  Node.js里实现标准输入输出的封装好的模块，通过这个模块我们可以以逐行的方式读取数据流。</p>
+<p>3、nodejs的知识点：<br>process.cwd() 是当前执行node命令时候的文件夹地址 ——工作目录（当前Node.js进程执行时的工作目录）<br><strong>dirname 是被执行的js 文件的地址 ——文件所在目录（当前模块的目录名）<br>  node.js进程当前工作的目录有可能不是该文件所在目录的完整目录
+</strong>filename 获取当前模块文件的带有完整绝对路径的文件名</p>
+<p>eg:<br><code>process.cwd()   /Users/meizu/myfile/programFile/cli-learn/lib</code><br><code>__dirname       /Users/meizu/myfile/programFile/cli-learn/lib</code><br><code>__filename      /Users/meizu/myfile/programFile/cli-learn/lib/config.js</code></p>
+<p>4、node child_process 子进程</p>
+<p>4、rimraf：以包的形式包装rm -rf命令，用来删除文件和文件夹的，不管文件夹是否为空，都可删除。<br>5、extend： </p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title='0' data-url='http://link.hhtjim.com/163/5146554.mp3'></li>
+                    
+                        <li title='1' data-url='http://link.hhtjim.com/qq/001faIUs4M2zna.mp3'></li>
+                    
+                </ul>
+            
+        </div>
+        <!-- 
+    <div id='gitalk-container' class="comment link">查看评论</div>
+ -->
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>

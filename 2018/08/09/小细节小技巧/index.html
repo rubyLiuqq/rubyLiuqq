@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="Chinese &amp; English" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RubyLiu&#39;s Blog</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    
+    <meta name="description" content="The site is used for technology accumulation and precipitation,目标：利用自制的命令行实现输出自己的简历；增加常用的命令：ls、 ls -a、打开当前目录
+怎么制作命令行1、配置基础框架2、新建bin/qqResume.js目录，并如下:123456789101,"> 
+    <meta name="author" content="Ruby Liu"> 
+    <link rel="alternative" href="atom.xml" title="RubyLiu&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-8691406134231910",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body class="loading">
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">小细节小技巧</h3>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">小细节小技巧</h1>
+        <div class="stuff">
+            <span>八月 09, 2018</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/css/">css</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/jquery/">jquery</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/js/">js</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>&emsp;&emsp;这篇文章专门用于记录在开发过程中遇到的奇葩现象，平时经常更新，用于自己的一个记录。</p>
+<h5 id="1、overflow的奇葩事件"><a href="#1、overflow的奇葩事件" class="headerlink" title="1、overflow的奇葩事件"></a>1、overflow的奇葩事件</h5><p>&emsp;&emsp;背景：这次遇到一个很奇怪的样子，其实应用的场景很简单，就是一个轮播，采用hidden处理周边的待滚动的li，但又接到hover上有动画的需求，此时设置overflow-x: hidden; overflow-y: visible;不能实现。没办法，看到网上好多人说增加父级，并对父级分别设置overflow来处理，不靠谱，实现不了。<br>&emsp;&emsp;原因：这块和overflow非visible值会使一个块级元素形成一个bfc（块级格式化上下文）有关。overflow-x和overflow-y的计算值跟给定的值相同，除了某些跟’visible’值的不合理组合：如果一个其中一个属性的值被赋为’visible’，而另一个被赋值为’scroll’或’auto’，那么’visible’会被重置为’auto’。overflow的计算值与overflow-x相等（如果overflow-y相同的话）；否则就是一对overflow-x和overflow-y的计算值。 其实另一个值设置为hidden的时候，visible也会被重置为auto。<br>&emsp;&emsp;处理方法：增加外围父级的高度，用于hover时的阴影用，然后margin点位置，用于hover时的上移。其他依旧正常设置，只是不让动画局限在撑起的高度内。</p>
+<h5 id="2、"><a href="#2、" class="headerlink" title="2、"></a>2、</h5>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title='0' data-url='http://link.hhtjim.com/163/5146554.mp3'></li>
+                    
+                        <li title='1' data-url='http://link.hhtjim.com/qq/001faIUs4M2zna.mp3'></li>
+                    
+                </ul>
+            
+        </div>
+        <!-- 
+    <div id='gitalk-container' class="comment link">查看评论</div>
+ -->
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>

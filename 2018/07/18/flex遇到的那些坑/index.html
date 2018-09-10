@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="Chinese &amp; English" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RubyLiu&#39;s Blog</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    
+    <meta name="description" content="The site is used for technology accumulation and precipitation,目标：利用自制的命令行实现输出自己的简历；增加常用的命令：ls、 ls -a、打开当前目录
+怎么制作命令行1、配置基础框架2、新建bin/qqResume.js目录，并如下:123456789101,"> 
+    <meta name="author" content="Ruby Liu"> 
+    <link rel="alternative" href="atom.xml" title="RubyLiu&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-8691406134231910",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body class="loading">
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">flex遇到的那些坑</h3>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">flex遇到的那些坑</h1>
+        <div class="stuff">
+            <span>七月 18, 2018</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/css3/">css3</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>&emsp;在一次H5的项目开发中，由于是典型的左中右的布局，就使用了flex，但是遇到了一些坑，在记录之前，先简单的说下flex吧，想兼容PC IE10之前的，就不要用了，还是老实的使用float吧。</p>
+<h3 id="flex基础"><a href="#flex基础" class="headerlink" title="flex基础"></a>flex基础</h3><p>&emsp; flex布局主要设计12个属性（父容器和子容器各6个），但实际常用的只有4个（各2个）</p>
+<h5 id="作用于父容器的属性："><a href="#作用于父容器的属性：" class="headerlink" title="作用于父容器的属性："></a>作用于父容器的属性：</h5><p><code>flex-direction</code>：决定主轴的方向<br><code>flex-wrap</code>：换行的方式<br><code>flex-flow</code>：为flex-direction和flex-wrap的简写形式，默认为：row nowrap<br><code>just-content</code>：在主轴上的对齐方式（eg 水平）<br><code>align-items</code>：在交叉轴上的对齐方式（eg 垂直）<br><code>align-content</code>：多根轴线的对齐方式，若只有一根轴线，不起作用</p>
+<h5 id="作用于子容器的属性："><a href="#作用于子容器的属性：" class="headerlink" title="作用于子容器的属性："></a>作用于子容器的属性：</h5><p><code>order</code>：排列顺序，数值越小，排列越靠前<br><code>flex-grow</code>：放大比例，默认为0，不放大<br>&emsp;&emsp;&emsp;&emsp;&emsp;若所有项目该值都为1，表示等分<br>&emsp;&emsp;&emsp;&emsp;&emsp;若有一个是2，其他的都为1 ，前者占据的剩余空间将比其他项多一倍<br><code>flex-shrink</code>：缩小比例，默认为1 ，即空间不足，项目将缩小<br>&emsp;&emsp;&emsp;&emsp;&emsp;若所有项目该值为1 ，当空间不足时，将等比例缩小<br>&emsp;&emsp;&emsp;&emsp;&emsp;若有一个是0，其他的都为1，则空间不足时，前者不缩小<br><code>flex-basis</code>：在分配多余空间之前，项目占据的主轴空间<br><code>flex</code>：flex-grow, flex-shrink 和 flex-basis的缩写，有auto(1 1 auto)和none(0 0 auto)快捷键<br><code>align-self</code>：允许单个项目有与其他小哀公母不一样的对齐方式，可覆盖align-items属性</p>
+<h3 id="遇坑计"><a href="#遇坑计" class="headerlink" title="遇坑计"></a>遇坑计</h3><h4 id="设置了flex-grow元素的子级宽度问题"><a href="#设置了flex-grow元素的子级宽度问题" class="headerlink" title="设置了flex-grow元素的子级宽度问题"></a>设置了flex-grow元素的子级宽度问题</h4><p>基础总结：<br><img src="https://juejin.im/post/58e3a5a0a0bb9f0069fc16bb" alt="flex"></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title='0' data-url='http://link.hhtjim.com/163/5146554.mp3'></li>
+                    
+                        <li title='1' data-url='http://link.hhtjim.com/qq/001faIUs4M2zna.mp3'></li>
+                    
+                </ul>
+            
+        </div>
+        <!-- 
+    <div id='gitalk-container' class="comment link">查看评论</div>
+ -->
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>

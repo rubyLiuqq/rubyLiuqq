@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="Chinese &amp; English" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RubyLiu&#39;s Blog</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    
+    <meta name="description" content="The site is used for technology accumulation and precipitation,目标：利用自制的命令行实现输出自己的简历；增加常用的命令：ls、 ls -a、打开当前目录
+怎么制作命令行1、配置基础框架2、新建bin/qqResume.js目录，并如下:123456789101,"> 
+    <meta name="author" content="Ruby Liu"> 
+    <link rel="alternative" href="atom.xml" title="RubyLiu&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-8691406134231910",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
+<body class="loading">
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">canvas系列之小球的碰撞运动</h3>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">canvas系列之小球的碰撞运动</h1>
+        <div class="stuff">
+            <span>七月 17, 2018</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/canvas/">canvas</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/js/">js</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>&emsp;之前分享过一次canvas的技术</p>
+<p>最近在一个项目中，遇到这么一个需求：一个页面中，大概有四五个元素需要按一定次序依次进场，setTimeout来实现吧，仔细一想，那样的代码实在是写不下去，大概是这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">view1Visible</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;<span class="attr">view2Visible</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.setState(&#123;<span class="attr">view3Visible</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">            setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">                <span class="comment">// 没完没了的setTimout...</span></span><br><span class="line">            &#125;,<span class="number">500</span>)</span><br><span class="line">        &#125;,<span class="number">500</span>)</span><br><span class="line">    &#125;,<span class="number">500</span>)</span><br><span class="line">&#125;,<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<p>&emsp;明显的回调地狱，对症下药，用Promise来简单封装一下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> timer=<span class="function">(<span class="params">task,ms</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">            task &amp;&amp; task()</span><br><span class="line">            resolve()</span><br><span class="line">        &#125;,ms)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;然后之前的代码大致可以写成这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">timer(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view1Visible</span>: <span class="literal">true</span>&#125;),<span class="number">100</span>)</span><br><span class="line">	.then(<span class="function"><span class="params">()</span>=&gt;</span>timer(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view2Visible</span>: <span class="literal">true</span>&#125;),<span class="number">500</span>))</span><br><span class="line">	.then(<span class="function"><span class="params">()</span>=&gt;</span>timer(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view3Visible</span>: <span class="literal">true</span>&#125;),<span class="number">500</span>))</span><br><span class="line">	.then(<span class="function"><span class="params">()</span>=&gt;</span>timer(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view4Visible</span>: <span class="literal">true</span>&#125;),<span class="number">500</span>))</span><br></pre></td></tr></table></figure>
+<p>&emsp;到这里基本已经满足我的需求了，如果对不喜欢用then，或者只是对它有意见，也可以用async/await来改写一下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> layout()&#123;</span><br><span class="line">    <span class="keyword">await</span> timer(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view1Visible</span>: <span class="literal">true</span>&#125;),<span class="number">100</span>)</span><br><span class="line">    <span class="keyword">await</span> timer(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view2Visible</span>: <span class="literal">true</span>&#125;),<span class="number">500</span>)</span><br><span class="line">    <span class="keyword">await</span> timer(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view3Visible</span>: <span class="literal">true</span>&#125;),<span class="number">500</span>)</span><br><span class="line">    <span class="keyword">await</span> timer(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view4Visible</span>: <span class="literal">true</span>&#125;),<span class="number">500</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;写到这里，已经足够了，不过我个人对timer的两个参数不喜欢，而且我更喜欢写链式风格的代码，理想的代码是这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Schedule()</span><br><span class="line">    .delay(<span class="number">100</span>).task(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view1Visible</span>:<span class="literal">true</span>&#125;))</span><br><span class="line">    .task(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view1Visible</span>:<span class="literal">true</span>&#125;))</span><br><span class="line">    .task(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view2Visible</span>:<span class="literal">true</span>&#125;))</span><br><span class="line">    .task(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view3Visible</span>:<span class="literal">true</span>&#125;))</span><br></pre></td></tr></table></figure>
+<p>&emsp;首先task和delay分别用两个方法传参，语义化嘛，一眼就能看出这个参数指的是什么；然后delay要能够复用，很多情下我们任务之间的间隔是相等的，就不用每次都传了。</p>
+<p>&emsp;实现方法嘛，在Schedule类中，要有个promise来处理这些任务，然后需要一个变量来保存delay，来达到复用的目的，然后就是delay和task两个方法，都返回this来实现链式调用。最后把上面那个timer方法拿过来，解决回调地狱。先看看最后的代码吧：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Schedule</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>()&#123;</span><br><span class="line">    <span class="keyword">this</span>._delay=<span class="number">0</span></span><br><span class="line">    <span class="keyword">this</span>.p = <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">  timer(task,ms)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        task &amp;&amp; task()</span><br><span class="line">        resolve()</span><br><span class="line">      &#125;,ms)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  task(task)&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;<span class="attr">_delay</span>:delay,timer,p&#125;=<span class="keyword">this</span></span><br><span class="line">    <span class="keyword">this</span>.p = p ?p.then(<span class="function"><span class="params">()</span>=&gt;</span>timer(task,delay)) :timer(task,delay)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">  &#125;</span><br><span class="line">  delay(_delay)&#123;</span><br><span class="line">    <span class="keyword">this</span>._delay = _delay</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;也没啥特别的，要注意的一点是，第一次调用task的时候，p为空，直接给他赋值即可。或者你一可以给p一个初始的promise，之后就不用考虑是否为空了，直接<code>p.then()</code>就可以了，而在这个时候，需要先用一个临时变量把delay缓存起来，否则最后再执行到当前task的时候，delay很有可能取到的是后面赋的值。</p>
+<p>&emsp;对于一般的需求，现在这个Schedule应该完全能够搞定，可能你想这样做：先把任务队列定义好，到了特定的时机再去触发它执行，那我们要怎么做呢？</p>
+<p>&emsp;其实也不难，每次调用task的时候，不放到promise里面，而是把task和当前delay先保存到一个数组里面，最后再写一个方法，在调用的时候遍历这个数组，把他们放到promise里面去，直接上代码好了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Schedule</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>()&#123;</span><br><span class="line">    <span class="keyword">this</span>._delay=<span class="number">0</span></span><br><span class="line">    <span class="keyword">this</span>.tasks=[]</span><br><span class="line">  &#125;</span><br><span class="line">  timer(task,ms)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        task &amp;&amp; task()</span><br><span class="line">        resolve()</span><br><span class="line">      &#125;,ms)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  task(task)&#123;</span><br><span class="line">    <span class="keyword">this</span>.tasks.push(&#123;task,<span class="attr">delay</span>:<span class="keyword">this</span>._delay&#125;)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">  &#125;</span><br><span class="line">  delay(_delay)&#123;</span><br><span class="line">    <span class="keyword">this</span>._delay = _delay</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">  &#125;</span><br><span class="line">  exec()&#123;</span><br><span class="line">    <span class="keyword">this</span>.tasks.length&gt;<span class="number">0</span> &amp;&amp; <span class="keyword">this</span>.tasks.reduce(</span><br><span class="line">      (p,t)=&gt;p.then(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.timer(t.task,t.delay)),</span><br><span class="line">      <span class="built_in">Promise</span>.resolve()</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;一个小小的技巧就是用数组的reduce方法来把这些task依次放到promise中，在reduce的第二个参数传入一个空的Promise，就避免了判断是否有初始Promise的问题。用的时候需要手动去调用exec方法，整个队列才回开始执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Schedule()</span><br><span class="line">    .delay(<span class="number">100</span>).task(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view1Visible</span>:<span class="literal">true</span>&#125;))</span><br><span class="line">    .task(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view1Visible</span>:<span class="literal">true</span>&#125;))</span><br><span class="line">    .task(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view2Visible</span>:<span class="literal">true</span>&#125;))</span><br><span class="line">    .task(<span class="function"><span class="params">()</span>=&gt;</span><span class="keyword">this</span>.setState(&#123;<span class="attr">view3Visible</span>:<span class="literal">true</span>&#125;))</span><br><span class="line">    .exec() <span class="comment">// 可以在任何你需要的时候调用</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;需要介绍的就这些了，最后其实有不少可以改进的地方，比如上面说的两种情况，完全可以写在一起，构造方法中传个参数来决定是否是需要延迟执行的队列。又或者引入cron表达式，来决定在特定的时间点执行任务……当然这些不在本文讨论的范畴，感兴趣的朋友可以去试试。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title='0' data-url='http://link.hhtjim.com/163/5146554.mp3'></li>
+                    
+                        <li title='1' data-url='http://link.hhtjim.com/qq/001faIUs4M2zna.mp3'></li>
+                    
+                </ul>
+            
+        </div>
+        <!-- 
+    <div id='gitalk-container' class="comment link">查看评论</div>
+ -->
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
